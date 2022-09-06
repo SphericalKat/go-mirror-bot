@@ -9,6 +9,7 @@ import (
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/SphericalKat/go-mirror-bot/internal/config"
+	"github.com/SphericalKat/go-mirror-bot/pkg/commands"
 	"github.com/rs/zerolog/log"
 )
 
@@ -48,6 +49,8 @@ func StartBot(ctx context.Context, wg *sync.WaitGroup) {
 	})
 
 	Dispatcher = updater.Dispatcher
+
+	commands.RegisterCommands(updater.Dispatcher)
 
 	log.Debug().Msg("Updater and dispatcher created")
 
