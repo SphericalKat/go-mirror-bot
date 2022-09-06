@@ -44,11 +44,11 @@ func formatSize(size int64) string {
 	return fmt.Sprintf("%fGB", formatNum(size / 1073741824))
 }
 
-func generateProgress(p int64) string {
-	p = int64(math.Min(math.Max(float64(p), 0), 100))
+func generateProgress(p float64) string {
+	p = math.Min(math.Max(p, 0), 100)
 	str := "["
-	cFull := math.Floor(float64(p) / 8)
-	cPart := p % 8 - 1
+	cFull := math.Floor(p / 8)
+	cPart := int64(p) % 8 - 1
 	str += strings.Repeat("█", int(cFull))
 
 	if cPart >= 0 {

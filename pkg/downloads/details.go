@@ -11,7 +11,7 @@ type DownloadDetails struct {
 	IsUploading              bool
 	UploadedBytes            int64
 	UploadedBytesLast        int64
-	LastUploadCheckTimeStamp int64
+	LastUploadCheckTimeStamp *time.Time
 	IsDownloadingAllowed     int64
 	IsDownloading            bool
 	Gid                      string
