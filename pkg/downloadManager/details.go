@@ -13,7 +13,7 @@ type DownloadDetails struct {
 	UploadedBytesLast        int64
 	LastUploadCheckTimeStamp int64
 	IsDownloadingAllowed     int64
-	IsDownloading            int64
+	IsDownloading            bool
 	Gid                      string
 	TgFromId                 int64
 	TgUsername               string
