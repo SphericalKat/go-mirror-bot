@@ -1,0 +1,35 @@
+package lifecycle
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"os/signal"
+	"sync"
+	"syscall"
+
+	"github.com/rs/zerolog/log"
+)
+
+// ShutdownListener listens for shutdown OS signals and then gracefully stops tasks using the context
+func ShutdownListener(
+	wg *sync.WaitGroup,
+	cf *context.CancelFunc,
+) {
+	// create channel to notify on system signals
+	termChan := make(chan os.Signal, 1)
+	signal.Notify(termChan, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+
+	// wait for signal
+	sig := <-termChan
+	log.Info().Msg(fmt.Sprintf("Received signal %v, gracefully shutting down services\n", sig))
+
+	// close channel
+	close(termChan)
+
+	// cancel background context
+	(*cf)()
+
+	// mark shutdown task as done
+	wg.Done()
+}
