@@ -2,6 +2,7 @@ package downloads
 
 import (
 	"fmt"
+	"math"
 
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/SphericalKat/go-mirror-bot/pkg/aria2c"
@@ -30,5 +31,14 @@ func GetStatus(details *DownloadDetails) (message string, filename string, files
 }
 
 func generateStatusMessage(totalSize uint, completed uint, speed uint, files []arigo.File, isUploading bool) StatusMessage {
+	filePath := findAriaFilePath(files)
+	fileName := getFileNameFromPath(filePath.Path, filePath.InputPath, filePath.DownloadUri)
+	var progress float64 = 0
+	if totalSize == 0 {
+		progress = 0
+	} else {
+		progress = math.Round(float64(completed) * 100 / float64(totalSize))
+	}
+
 	
 }
