@@ -1,3 +1,4 @@
 .env
 go-mirror-bot
 *.exe
+config.toml

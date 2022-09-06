@@ -1,4 +1,4 @@
-package downloadmanager
+package downloads
 
 import (
 	"fmt"
@@ -52,3 +52,4 @@ func NewDownloadDetails(gid string, msg *gotgbot.Message, isTar bool, downloadDi
 
 	return dd
 }
+

@@ -14,6 +14,7 @@ import (
 )
 
 var Dispatcher *ext.Dispatcher
+var Bot *gotgbot.Bot
 
 func StartBot(ctx context.Context, wg *sync.WaitGroup) {
 	token := config.Conf.BotToken
@@ -32,6 +33,8 @@ func StartBot(ctx context.Context, wg *sync.WaitGroup) {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to create new bot")
 	}
+
+	Bot = b
 
 	log.Debug().Msg("Bot created")
 

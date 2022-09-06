@@ -1,4 +1,4 @@
-package downloadmanager
+package downloads
 
 import (
 	"strconv"

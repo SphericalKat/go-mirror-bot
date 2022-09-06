@@ -9,13 +9,13 @@ import (
 )
 
 type Config struct {
-	DatabaseURL  string `mapstructure:"DATABASE_URL"`
-	Port         string `mapstructure:"PORT"`
-	BotToken     string `mapstructure:"BOT_TOKEN"`
-	S3AccessKey  string `mapstructure:"S3_ACCESS_KEY"`
-	S3SecretKey  string `mapstructure:"S3_SECRET_KEY"`
-	S3BucketName string `mapstructure:"S3_BUCKET_NAME"`
-	Env          string `mapstructure:"ENV"`
+	DatabaseURL     string  `mapstructure:"DATABASE_URL"`
+	Port            string  `mapstructure:"PORT"`
+	BotToken        string  `mapstructure:"BOT_TOKEN"`
+	Env             string  `mapstructure:"ENV"`
+	DownloadDir     string  `mapstructure:"ARIA_DOWNLOAD_LOCATION"`
+	SudoUsers       []int64 `mapstructure:"SUDO_USERS"`
+	AuthorizedChats []int64 `mapstructure:"AUTHORIZED_CHATS"`
 }
 
 var Conf *Config
@@ -23,8 +23,8 @@ var Conf *Config
 func Load() {
 	// tell viper where our config file is
 	viper.AddConfigPath(".")
-	viper.SetConfigName(".env")
-	viper.SetConfigType("env")
+	viper.SetConfigName("config.toml")
+	viper.SetConfigType("toml")
 
 	// override values that it has read from config file with the values of the corresponding environment variables if they exist
 	viper.AutomaticEnv()
