@@ -111,7 +111,10 @@ func (d *DownloadManager) ForEachStatus(callback func(status *Status)) {
 }
 
 func (d *DownloadManager) QueueStatus(msg *gotgbot.Message, callback func(msg *gotgbot.Message, keep bool)) {
-	d.StatusQueue.Enqueue(callback)
+	toCall := func() {
+		callback(msg, true)
+	}
+	d.StatusQueue.Enqueue(toCall)
 }
 
 func (d *DownloadManager) AddCancelled(detail *DownloadDetails) {

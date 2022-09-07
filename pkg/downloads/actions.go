@@ -14,23 +14,27 @@ import (
 
 func PrepDownload(msg *gotgbot.Message, match string, isTar bool) {
 	dlDir := uuid.NewString()
+	dlm := GetDownloadManager()
+
 	gid, err := aria2c.Aria.AddURI([]string{match}, &arigo.Options{
 		Dir: dlDir,
 	})
-	GetDownloadManager().AddDownload(gid.GID, dlDir, msg, isTar)
+
+	dlm.AddDownload(gid.GID, dlDir, msg, isTar)
 
 	if err != nil {
-		message := fmt.Sprintf("Failed to start the download.", err)
+		message := fmt.Sprintf("Failed to start the download. %s", err)
 		log.Error().Err(err).Str("uri", match).Msg("failed to start download")
+		cleanupDownload(gid.GID, message, "", nil)
 		return
 	}
 
 	log.Info().Str("gid", gid.GID).Str("uri", match).Msg("Starting download")
 
-	go func() {
+	go func(msg *gotgbot.Message) {
 		time.Sleep(1 * time.Second)
-		GetDownloadManager().QueueStatus(msg, sendStatusMessage)
-	}()
+		dlm.QueueStatus(msg, sendStatusMessage)
+	}(msg)
 }
 
 func cleanupDownload(gid string, message string, url string, details *DownloadDetails) {
