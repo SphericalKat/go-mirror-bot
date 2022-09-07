@@ -4,10 +4,10 @@ go 1.18
 
 require (
 	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.10
+	github.com/SphericalKat/arigo v0.0.0-20220907164004-254e13e0a36a
 	github.com/google/uuid v1.3.0
 	github.com/puzpuzpuz/xsync v1.4.3
 	github.com/rs/zerolog v1.28.0
-	github.com/siku2/arigo v0.2.0
 	github.com/spf13/viper v1.12.0
 )
 

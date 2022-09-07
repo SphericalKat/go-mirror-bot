@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/PaulSonOfLars/gotgbot/v2"
+	"github.com/SphericalKat/arigo"
 	"github.com/SphericalKat/go-mirror-bot/internal/lifecycle"
 	"github.com/SphericalKat/go-mirror-bot/pkg/aria2c"
 	"github.com/rs/zerolog/log"
-	"github.com/siku2/arigo"
 )
 
 type Status struct {

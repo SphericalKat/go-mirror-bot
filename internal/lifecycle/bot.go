@@ -76,13 +76,13 @@ func StartBot(ctx context.Context, wg *sync.WaitGroup, botInit chan struct{}) {
 	// listen for context cancellation
 	<-ctx.Done()
 
-	// shut down bot
-	log.Info().Msg("Gracefully shutting down bot")
-
 	err = updater.Stop()
 	if err != nil {
 		log.Error().Err(err).Msg("Error while shutting down bot")
 	}
+
+	// shut down bot
+	log.Info().Msg("Gracefully shutting down bot")
 
 	wg.Done()
 }

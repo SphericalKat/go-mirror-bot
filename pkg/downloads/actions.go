@@ -6,14 +6,13 @@ import (
 	"time"
 
 	"github.com/PaulSonOfLars/gotgbot/v2"
+	"github.com/SphericalKat/arigo"
 	"github.com/SphericalKat/go-mirror-bot/internal/config"
 	"github.com/SphericalKat/go-mirror-bot/internal/lifecycle"
 	"github.com/SphericalKat/go-mirror-bot/pkg/aria2c"
 	"github.com/google/uuid"
 	"github.com/rs/zerolog/log"
-	"github.com/siku2/arigo"
 )
-
 
 func PrepDownload(msg *gotgbot.Message, match string, isTar bool) {
 	dlDir := uuid.NewString()
@@ -59,11 +58,11 @@ func cleanupDownload(gid string, message string, url string, details *DownloadDe
 		if !wasCancelAlled {
 			// If the dl was stopped with a cancelAll command, a message has already been sent to the chat.
 			// Do not send another one.
-			if (details.TgRepliedUsername != "")  {
+			if details.TgRepliedUsername != "" {
 				message += fmt.Sprintf("\ncc:%s", details.TgRepliedUsername)
 				lifecycle.Bot.SendMessage(details.TgChatId, message, &gotgbot.SendMessageOpts{
 					ReplyToMessageId: details.TgMsgId,
-					ParseMode: "html",
+					ParseMode:        "html",
 				})
 			}
 		}
@@ -91,7 +90,7 @@ func sendStatusMessage(msg *gotgbot.Message, keepForever bool) {
 	if keepForever {
 		msg, err := lifecycle.Bot.SendMessage(msg.Chat.Id, res.message, &gotgbot.SendMessageOpts{
 			ReplyToMessageId: msg.MessageId,
-			ParseMode: "html",
+			ParseMode:        "html",
 		})
 		if err != nil {
 			log.Error().Err(err).Msg("Failed to send status message")
@@ -102,7 +101,7 @@ func sendStatusMessage(msg *gotgbot.Message, keepForever bool) {
 	} else {
 		msg, err := lifecycle.Bot.SendMessage(msg.Chat.Id, res.message, &gotgbot.SendMessageOpts{
 			ReplyToMessageId: msg.MessageId,
-			ParseMode: "html",
+			ParseMode:        "html",
 		})
 		if err != nil {
 			log.Error().Err(err).Msg("Failed to send status message")

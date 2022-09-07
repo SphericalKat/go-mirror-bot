@@ -4,8 +4,8 @@ import (
 	"context"
 	"sync"
 
+	"github.com/SphericalKat/arigo"
 	"github.com/rs/zerolog/log"
-	"github.com/siku2/arigo"
 )
 
 var Aria *arigo.Client
@@ -15,7 +15,7 @@ func ConnectRPC(ctx context.Context, wg *sync.WaitGroup) {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Unable to connect to aria2 RPC")
 	}
-	Aria = &c
+	Aria = c
 	log.Info().Msg("Connected to aria2 RPC")
 
 	go func() {

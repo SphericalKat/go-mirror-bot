@@ -9,7 +9,6 @@ import (
 )
 
 func ConsumeStatusQueue(ctx context.Context, wg *sync.WaitGroup) {
-	defer wg.Done()
 	log.Info().Msg("Starting status queue consumer event loop")
 	dlm := GetDownloadManager()
 	stop := false
@@ -19,15 +18,14 @@ func ConsumeStatusQueue(ctx context.Context, wg *sync.WaitGroup) {
 			log.Info()
 			stop = true
 		default:
-			go func() {
-				consume, ok := dlm.StatusQueue.TryDequeue()
-				if ok {
-					consume.(func())()
-				} else {
-					time.Sleep(50 * time.Millisecond)
-				}
-			}()
+			consume, ok := dlm.StatusQueue.TryDequeue()
+			if ok {
+				consume.(func())()
+			} else {
+				time.Sleep(50 * time.Millisecond)
+			}
 		}
 	}
+	wg.Done()
 	log.Info().Msg("Gracefully shutting down event loop")
 }

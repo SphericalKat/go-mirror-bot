@@ -9,11 +9,11 @@ import (
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext/handlers"
+	"github.com/SphericalKat/arigo"
 	"github.com/SphericalKat/go-mirror-bot/internal/config"
 	"github.com/SphericalKat/go-mirror-bot/internal/lifecycle"
 	"github.com/SphericalKat/go-mirror-bot/pkg/aria2c"
 	"github.com/rs/zerolog/log"
-	"github.com/siku2/arigo"
 )
 
 var ticker *time.Ticker
@@ -162,31 +162,35 @@ func RegisterCommands(ctx context.Context, wg *sync.WaitGroup) {
 	lifecycle.Dispatcher.AddHandler(handlers.NewCommand("start", start))
 	lifecycle.Dispatcher.AddHandler(handlers.NewCommand("upload", upload))
 
-	aria2c.Aria.Subscribe(arigo.StartEvent, func(event *arigo.DownloadEvent) {
+	aria2c.Aria.OnDownloadStart(func(event *arigo.DownloadEvent) {
+		log.Info().Msg("DOWNLOAD START")
 		onDownloadStart(event, 1)
 	})
 
-	aria2c.Aria.Subscribe(arigo.StopEvent, func(event *arigo.DownloadEvent) {
+	aria2c.Aria.OnDownloadStop(func(event *arigo.DownloadEvent) {
 		onDownloadStop(event, 1)
 	})
 
-	aria2c.Aria.Subscribe(arigo.CompleteEvent, func(event *arigo.DownloadEvent) {
+	aria2c.Aria.OnDownloadComplete(func(event *arigo.DownloadEvent) {
 		onDownloadComplete(event, 1)
 	})
 
-	aria2c.Aria.Subscribe(arigo.ErrorEvent, func(event *arigo.DownloadEvent) {
+	aria2c.Aria.OnDownloadError(func(event *arigo.DownloadEvent) {
 		onDownloadError(event, 1)
 	})
 
 	// listen for shutdowns and tickers
 	go func() {
-		defer wg.Done()
+		go func() {
+			<-ctx.Done()
+			if ticker != nil {
+				ticker.Stop()
+			}
+			wg.Done()
+		}()
 		for {
-			// log.Info().Bool("ticker", ticker == nil).Msg("Ticker is nil?")
 			if ticker != nil {
 				select {
-				case <-ctx.Done():
-					ticker.Stop()
 				case <-ticker.C:
 					updateAllStatusMessages()
 				}

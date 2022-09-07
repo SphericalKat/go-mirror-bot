@@ -40,6 +40,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.10 h1:4P297S3AZ8RsBrMPxJm+jpFCY8kx8KZPNZXp6ThDAbQ=
 github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.10/go.mod h1:r815fYWTudnU9JhtsJAxUtuV7QrSgKpChJkfTSMFpfg=
+github.com/SphericalKat/arigo v0.0.0-20220907164004-254e13e0a36a h1:5Wn7ZmWD5rYUV6a71yqg1tB72RS+scJn/jNGGvr0aFA=
+github.com/SphericalKat/arigo v0.0.0-20220907164004-254e13e0a36a/go.mod h1:3YkW9yoVrwbxngl+0yQgptXgVVFHyRWmVePfll0rzL8=
 github.com/cenk/hub v1.0.1 h1:RBwXNOF4a8KjD8BJ08XqN8KbrqaGiQLDrgvUGJSHuPA=
 github.com/cenk/hub v1.0.1/go.mod h1:rJM1LNAW0ppT8FMMuPK6c2NP/R2nH/UthtuRySSaf6Y=
 github.com/cenkalti/hub v1.0.1-0.20160527103212-11382a9960d3/go.mod h1:tcYwtS3a2d9NO/0xDXVJWx3IedurUjYCqFCmpi0lpHs=
@@ -174,8 +176,6 @@ github.com/rogpeppe/go-internal v1.6.1 h1:/FiVV8dS/e+YqF2JvO3yXRFbBLTIuSDkuC7aBO
 github.com/rs/xid v1.4.0/go.mod h1:trrq9SKmegXys3aeAKXMUTdJsYXVwGY3RLcfgqegfbg=
 github.com/rs/zerolog v1.28.0 h1:MirSo27VyNi7RJYP3078AA1+Cyzd2GB66qy3aUHvsWY=
 github.com/rs/zerolog v1.28.0/go.mod h1:NILgTygv/Uej1ra5XxGf82ZFSLk58MFGAUS2o6usyD0=
-github.com/siku2/arigo v0.2.0 h1:gB5zGgCNtRd83IrdeimL+Jp5Yhj9wKo/DhAvVXh/l4k=
-github.com/siku2/arigo v0.2.0/go.mod h1:/slSGOCL5awvY4Q9SlyR15wBjeGllHLrLE1E/2MztMQ=
 github.com/spf13/afero v1.9.2 h1:j49Hj62F0n+DaZ1dDCvhABaPNSGNkt32oRFxI33IEMw=
 github.com/spf13/afero v1.9.2/go.mod h1:iUV7ddyEEZPO5gA3zD4fJt6iStLlL+Lg4m2cihcDf8Y=
 github.com/spf13/cast v1.5.0 h1:rj3WzYc11XZaIZMPKmwP96zkFEnnAmV8s6XbB2aY32w=

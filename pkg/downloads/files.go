@@ -4,8 +4,8 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/SphericalKat/arigo"
 	"github.com/SphericalKat/go-mirror-bot/internal/config"
-	"github.com/siku2/arigo"
 )
 
 type FilePath struct {
@@ -14,7 +14,7 @@ type FilePath struct {
 	DownloadUri string
 }
 
-const TYPE_METADATA = "Metadata";
+const TYPE_METADATA = "Metadata"
 
 func findAriaFilePath(files []arigo.File) FilePath {
 	filePath := files[0].Path
@@ -49,17 +49,17 @@ func findAriaFilePath(files []arigo.File) FilePath {
 }
 
 func substr(s string, start, end int) string {
-    counter, startIdx := 0, 0
-    for i := range s {
-        if counter == start {
-            startIdx = i
-        }
-        if counter == end {
-            return s[startIdx:i]
-        }
-        counter++
-    }
-    return s[startIdx:]
+	counter, startIdx := 0, 0
+	for i := range s {
+		if counter == start {
+			startIdx = i
+		}
+		if counter == end {
+			return s[startIdx:i]
+		}
+		counter++
+	}
+	return s[startIdx:]
 }
 
 func getFileNameFromPath(filePath string, inputPath string, uri string) string {
@@ -79,7 +79,6 @@ func getFileNameFromPath(filePath string, inputPath string, uri string) string {
 
 	return fileName
 }
-
 
 func getFileNameFromUri(path string, uri string) string {
 	if path != "" {
