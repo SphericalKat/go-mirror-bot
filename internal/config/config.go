@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"time"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -9,13 +10,14 @@ import (
 )
 
 type Config struct {
-	DatabaseURL     string  `mapstructure:"DATABASE_URL"`
-	Port            string  `mapstructure:"PORT"`
-	BotToken        string  `mapstructure:"BOT_TOKEN"`
-	Env             string  `mapstructure:"ENV"`
-	DownloadDir     string  `mapstructure:"ARIA_DOWNLOAD_LOCATION"`
-	SudoUsers       []int64 `mapstructure:"SUDO_USERS"`
-	AuthorizedChats []int64 `mapstructure:"AUTHORIZED_CHATS"`
+	DatabaseURL          string  `mapstructure:"DATABASE_URL"`
+	Port                 string  `mapstructure:"PORT"`
+	BotToken             string  `mapstructure:"BOT_TOKEN"`
+	Env                  string  `mapstructure:"ENV"`
+	DownloadDir          string  `mapstructure:"ARIA_DOWNLOAD_LOCATION"`
+	SudoUsers            []int64 `mapstructure:"SUDO_USERS"`
+	AuthorizedChats      []int64 `mapstructure:"AUTHORIZED_CHATS"`
+	StatusUpdateDuration int64     `mapstructure:"STATUS_UPDATE_INTERVAL_MS"`
 }
 
 var Conf *Config
@@ -34,6 +36,7 @@ func Load() {
 	viper.SetDefault("DATABASE_URL", "postgres://postgres:password@localhost:5432/katbox?sslmode=disable")
 	viper.SetDefault("S3_BUCKET_NAME", "katbox")
 	viper.SetDefault("ENV", "dev")
+	viper.SetDefault("STATUS_UPDATE_INTERVAL_MS", 12000)
 
 	// read in config values
 	err := viper.ReadInConfig()

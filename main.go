@@ -36,7 +36,8 @@ func main() {
 
 	// wait for bot to be initialized
 	<-botInit
-	downloads.RegisterCommands()
+	wg.Add(1)
+	downloads.RegisterCommands(ctx, &wg)
 
 	// add signal handler to gracefully shut down tasks
 	wg.Add(1)

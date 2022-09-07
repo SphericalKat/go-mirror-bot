@@ -7,7 +7,9 @@ import (
 	"time"
 
 	"github.com/PaulSonOfLars/gotgbot/v2"
+	"github.com/SphericalKat/go-mirror-bot/internal/lifecycle"
 	"github.com/SphericalKat/go-mirror-bot/pkg/aria2c"
+	"github.com/rs/zerolog/log"
 	"github.com/siku2/arigo"
 )
 
@@ -191,5 +193,51 @@ func GetStatusMessage() StatusAll {
 			message:            "No active or queued downloads",
 			totalDownloadCount: 0,
 		}
+	}
+}
+
+func deleteAllStatusMessages() {
+	dlm := GetDownloadManager()
+	dlm.ForEachStatus(func(status *Status) {
+		go func(chatId, msgId int64) {
+			time.Sleep(10 * time.Second)
+			lifecycle.Bot.DeleteMessage(chatId, msgId, nil)
+		}(status.Msg.Chat.Id, status.Msg.MessageId)
+		dlm.DeleteStatus(status.Msg.Chat.Id)
+	})
+}
+
+func updateAllStatusMessages() {
+	res := GetStatusMessage()
+	dlm := GetDownloadManager()
+	if len(res.singleStatuses) > 0 {
+		for _, status := range res.singleStatuses {
+			if status.Details != nil {
+				// TODO: handle disallowed filenames
+			}
+		}
+	}
+
+	dlm.ForEachStatus(func(status *Status) {
+		// Do not update the status if the message remains the same.
+		// Otherwise, the Telegram API starts complaining.
+		if res.message != status.LastStatus {
+			_, _, err := lifecycle.Bot.EditMessageText(res.message, &gotgbot.EditMessageTextOpts{
+				ChatId:    status.Msg.Chat.Id,
+				MessageId: status.Msg.MessageId,
+				ParseMode: "html",
+			})
+			if err != nil {
+				log.Error().Err(err).Msg("updateAllStatusMessages: failed to edit message")
+			}
+			status.LastStatus = res.message
+		}
+	})
+
+	if res.totalDownloadCount == 0 {
+		// no more downloads, stop the status refresh timer
+		ticker.Stop()
+		ticker = nil
+		deleteAllStatusMessages()
 	}
 }
