@@ -2,9 +2,11 @@ package downloads
 
 import (
 	"fmt"
+	"path/filepath"
 	"time"
 
 	"github.com/PaulSonOfLars/gotgbot/v2"
+	"github.com/SphericalKat/go-mirror-bot/internal/config"
 	"github.com/SphericalKat/go-mirror-bot/internal/lifecycle"
 	"github.com/SphericalKat/go-mirror-bot/pkg/aria2c"
 	"github.com/google/uuid"
@@ -20,7 +22,7 @@ func PrepDownload(msg *gotgbot.Message, match string, isTar bool) {
 	log.Debug().Str("uri", match).Msg("Adding URI to aria")
 
 	gid, err := aria2c.Aria.AddURI([]string{match}, &arigo.Options{
-		Dir: dlDir,
+		Dir: filepath.Join(config.Conf.DownloadDir, dlDir),
 	})
 
 	dlm.AddDownload(gid.GID, dlDir, msg, isTar)

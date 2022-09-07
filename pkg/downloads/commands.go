@@ -56,6 +56,7 @@ func onDownloadStart(event *arigo.DownloadEvent, retry uint) {
 		}
 
 	} else if retry <= 8 {
+		log.Info().Uint("retry", retry).Msg("Retrying download start")
 		go func() {
 			time.Sleep(500 * time.Millisecond)
 			onDownloadStart(event, retry+1)
@@ -106,6 +107,57 @@ func onDownloadError(event *arigo.DownloadEvent, retry uint) {
 	}
 }
 
+func onDownloadComplete(event *arigo.DownloadEvent, retry uint) {
+	dlm := GetDownloadManager()
+	details := dlm.GetDownloadByGid(event.GID)
+	if details != nil {
+		files, err := aria2c.Aria.GetFiles(event.GID)
+		if err != nil {
+			log.Error().Err(err).Str("gid", event.GID).Msg("Error getting file path for completed download")
+			msg := "Upload failed. Could not find downloaded files."
+			cleanupDownload(event.GID, msg, "", nil)
+			return
+		}
+
+		file := findAriaFilePath(files).Path
+		if file != "" {
+			_, err := aria2c.Aria.TellStatus(event.GID, "totalLength")
+			if err != nil {
+				log.Error().Err(err).Str("gid", event.GID).Msg("Error getting file size for completed download")
+				msg := "Upload failed. Could not get file size."
+				cleanupDownload(event.GID, msg, "", nil)
+				return
+			}
+
+			filename := getFileNameFromPath(file, "", "")
+			details.IsUploading = true
+			log.Info().Str("gid", event.GID).Str("filename", filename).Msg("Download complete. Starting upload")
+
+		} else {
+			status, err := aria2c.Aria.TellStatus(event.GID, "followedBy")
+			if err != nil {
+				log.Error().Err(err).Str("gid", event.GID).Msg("Failed to check if it was a metadata download")
+				msg := "Upload failed. Could not check if the file is metadata."
+				cleanupDownload(event.GID, msg, "", nil)
+			} else if status.FollowedBy != nil && len(status.FollowedBy) != 0 {
+				log.Info().Str("oldGid", event.GID).Str("newGid", status.FollowedBy[0]).Msg("Download GID changed.")
+				dlm.ChangeDownloadGid(event.GID, status.FollowedBy[0])
+			} else {
+				log.Error().Err(err).Str("gid", event.GID).Msg("No files - not metadata")
+				msg := "Upload failed. Could not get files"
+				cleanupDownload(event.GID, msg, "", nil)
+			}
+		}
+	} else if retry <= 8 {
+		go func() {
+			time.Sleep(500 * time.Millisecond)
+			onDownloadComplete(event, retry+1)
+		}()
+	} else {
+		log.Error().Str("gid", event.GID).Msg("Download details empty even after 8 retries, giving up")
+	}
+}
+
 func RegisterCommands(ctx context.Context, wg *sync.WaitGroup) {
 	lifecycle.Dispatcher.AddHandler(handlers.NewCommand("start", start))
 	lifecycle.Dispatcher.AddHandler(handlers.NewCommand("upload", upload))
@@ -119,24 +171,25 @@ func RegisterCommands(ctx context.Context, wg *sync.WaitGroup) {
 	})
 
 	aria2c.Aria.Subscribe(arigo.CompleteEvent, func(event *arigo.DownloadEvent) {
-
+		onDownloadComplete(event, 1)
 	})
 
 	aria2c.Aria.Subscribe(arigo.ErrorEvent, func(event *arigo.DownloadEvent) {
-
+		onDownloadError(event, 1)
 	})
 
 	// listen for shutdowns and tickers
 	go func() {
+		defer wg.Done()
 		for {
-			select {
-			case <-ctx.Done():
-				if ticker != nil {
+			// log.Info().Bool("ticker", ticker == nil).Msg("Ticker is nil?")
+			if ticker != nil {
+				select {
+				case <-ctx.Done():
 					ticker.Stop()
+				case <-ticker.C:
+					updateAllStatusMessages()
 				}
-				wg.Done()
-			case <-ticker.C:
-				updateAllStatusMessages()
 			}
 		}
 	}()

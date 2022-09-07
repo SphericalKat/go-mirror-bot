@@ -1,12 +1,10 @@
 package config
 
 import (
-	"os"
-	"time"
-
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+	"os"
 )
 
 type Config struct {
@@ -17,7 +15,7 @@ type Config struct {
 	DownloadDir          string  `mapstructure:"ARIA_DOWNLOAD_LOCATION"`
 	SudoUsers            []int64 `mapstructure:"SUDO_USERS"`
 	AuthorizedChats      []int64 `mapstructure:"AUTHORIZED_CHATS"`
-	StatusUpdateDuration int64     `mapstructure:"STATUS_UPDATE_INTERVAL_MS"`
+	StatusUpdateDuration int64   `mapstructure:"STATUS_UPDATE_INTERVAL_MS"`
 }
 
 var Conf *Config
