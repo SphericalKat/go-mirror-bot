@@ -16,6 +16,7 @@ type Config struct {
 	SudoUsers            []int64 `mapstructure:"SUDO_USERS"`
 	AuthorizedChats      []int64 `mapstructure:"AUTHORIZED_CHATS"`
 	StatusUpdateDuration int64   `mapstructure:"STATUS_UPDATE_INTERVAL_MS"`
+	DriveDirId           string  `mapstructure:"GDRIVE_PARENT_DIR_ID"`
 }
 
 var Conf *Config

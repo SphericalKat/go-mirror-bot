@@ -121,7 +121,7 @@ func onDownloadComplete(event *arigo.DownloadEvent, retry uint) {
 
 		file := findAriaFilePath(files).Path
 		if file != "" {
-			_, err := aria2c.Aria.TellStatus(event.GID, "totalLength")
+			status, err := aria2c.Aria.TellStatus(event.GID, "totalLength")
 			if err != nil {
 				log.Error().Err(err).Str("gid", event.GID).Msg("Error getting file size for completed download")
 				msg := "Upload failed. Could not get file size."
@@ -132,7 +132,7 @@ func onDownloadComplete(event *arigo.DownloadEvent, retry uint) {
 			filename := getFileNameFromPath(file, "", "")
 			details.IsUploading = true
 			log.Info().Str("gid", event.GID).Str("filename", filename).Msg("Download complete. Starting upload")
-
+			UploadFile(details, file, status.TotalLength)
 		} else {
 			status, err := aria2c.Aria.TellStatus(event.GID, "followedBy")
 			if err != nil {
@@ -176,6 +176,10 @@ func RegisterCommands(ctx context.Context, wg *sync.WaitGroup) {
 
 	aria2c.Aria.OnDownloadError(func(event *arigo.DownloadEvent) {
 		onDownloadError(event, 1)
+	})
+
+	aria2c.Aria.OnBTDownloadComplete(func(event *arigo.DownloadEvent) {
+		onDownloadComplete(event, 1)
 	})
 
 	// listen for shutdowns and tickers

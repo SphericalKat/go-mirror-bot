@@ -2,3 +2,6 @@
 go-mirror-bot
 *.exe
 config.toml
+service-account.json
+.DS_Store
+ariadownloads

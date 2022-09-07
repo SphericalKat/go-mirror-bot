@@ -72,11 +72,21 @@ func getFileNameFromPath(filePath string, inputPath string, uri string) string {
 	if nameEndIndex == -1 {
 		nameEndIndex = len(filePath)
 	}
-	fileName := substr(filePath, baseDirLength, nameEndIndex)
+	fileName := substr(filePath, baseDirLength, nameEndIndex+baseDirLength)
 	if fileName == "" {
 		return getFileNameFromUri(inputPath, uri)
 	}
 
+	return fileName
+}
+
+func getActualDownloadPath(filePath string) string {
+	baseDirLength := len(config.Conf.DownloadDir) + 38
+	nameEndIndex := strings.Index(filePath[baseDirLength:], "/")
+	if nameEndIndex == -1 {
+		nameEndIndex = len(filePath)
+	}
+	fileName := substr(filePath, 0, nameEndIndex+baseDirLength)
 	return fileName
 }
 
