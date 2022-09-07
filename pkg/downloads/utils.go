@@ -28,20 +28,20 @@ func deleteDownloadedFile(subdir string) {
 	log.Info().Str("path", path).Msg("deleted downloads")
 }
 
-func formatSize(size int64) string {
+func formatSize(size float64) string {
 	if size < 1000 {
-		return fmt.Sprintf("%fB", formatNum(size))
+		return fmt.Sprintf("%.2fB", formatNum(size))
 	}
 
 	if size < 1024000 {
-		return fmt.Sprintf("%fKB", formatNum(size / 1024))
+		return fmt.Sprintf("%.2fKB", formatNum(size / 1024))
 	}
 
 	if size < 1048576000 {
-		return fmt.Sprintf("%fMB", formatNum(size / 1048576))
+		return fmt.Sprintf("%.2fMB", formatNum(size / 1048576))
 	}
 
-	return fmt.Sprintf("%fGB", formatNum(size / 1073741824))
+	return fmt.Sprintf("%.2fGB", formatNum(size / 1073741824))
 }
 
 func generateProgress(p float64) string {
@@ -56,11 +56,11 @@ func generateProgress(p float64) string {
 	}
 
 	str += strings.Repeat(" ", PROGRESS_MAX_SIZE - int(cFull))
-	str = fmt.Sprintf("%s] %f%%", str, p)
+	str = fmt.Sprintf("%s] %.2f%%", str, p)
 
 	return str
 }
 
-func formatNum(n int64) float64 {
-	return math.Round(float64(n) * 100) / 100
+func formatNum(n float64) float64 {
+	return math.Round(n * 100) / 100
 }

@@ -77,9 +77,9 @@ func generateStatusMessage(totalSize uint, completed uint, speed uint, files []a
 		progress = math.Round(float64(completed) * 100 / float64(totalSize))
 	}
 
-	totalLenStr := formatSize(int64(totalSize))
+	totalLenStr := formatSize(float64(totalSize))
 	progressString := generateProgress(progress)
-	speedStr := formatSize(int64(speed))
+	speedStr := formatSize(float64(speed))
 	eta := downloadETA(totalSize, completed, speed)
 
 	var Type string

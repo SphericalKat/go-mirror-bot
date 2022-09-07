@@ -163,7 +163,6 @@ func RegisterCommands(ctx context.Context, wg *sync.WaitGroup) {
 	lifecycle.Dispatcher.AddHandler(handlers.NewCommand("upload", upload))
 
 	aria2c.Aria.OnDownloadStart(func(event *arigo.DownloadEvent) {
-		log.Info().Msg("DOWNLOAD START")
 		onDownloadStart(event, 1)
 	})
 
@@ -190,10 +189,9 @@ func RegisterCommands(ctx context.Context, wg *sync.WaitGroup) {
 		}()
 		for {
 			if ticker != nil {
-				select {
-				case <-ticker.C:
-					updateAllStatusMessages()
-				}
+				<-ticker.C
+				updateAllStatusMessages()
+
 			}
 		}
 	}()
