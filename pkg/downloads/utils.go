@@ -56,7 +56,7 @@ func generateProgress(p float64) string {
 	}
 
 	str += strings.Repeat(" ", PROGRESS_MAX_SIZE - int(cFull))
-	str = fmt.Sprintf("%s] %f%", str, p)
+	str = fmt.Sprintf("%s] %f%%", str, p)
 
 	return str
 }
