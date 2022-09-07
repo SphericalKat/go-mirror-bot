@@ -2,6 +2,7 @@ package downloads
 
 import (
 	"context"
+	"fmt"
 	"sync"
 	"time"
 
@@ -75,6 +76,30 @@ func onDownloadStop(event *arigo.DownloadEvent, retry uint) {
 		go func() {
 			time.Sleep(500 * time.Millisecond)
 			onDownloadStop(event, retry+1)
+		}()
+	} else {
+		log.Error().Str("gid", event.GID).Msg("Download details empty even after 8 retries, giving up")
+	}
+}
+
+func onDownloadError(event *arigo.DownloadEvent, retry uint) {
+	dlm := GetDownloadManager()
+	details := dlm.GetDownloadByGid(event.GID)
+	if details != nil {
+		var message string
+		status, err := aria2c.Aria.TellStatus(event.GID, "errorMessage")
+		if err != nil {
+			message = "Download stopped."
+			log.Error().Str("gid", event.GID).Err(err).Msg("Download failed. Unable to get failure reason.")
+		} else {
+			message = fmt.Sprintf("Download stopped. %s", status.ErrorMessage)
+			log.Error().Str("gid", event.GID).Msg("Download failed.")
+		}
+		cleanupDownload(event.GID, message, "", details)
+	} else if retry <= 8 {
+		go func() {
+			time.Sleep(500 * time.Millisecond)
+			onDownloadError(event, retry+1)
 		}()
 	} else {
 		log.Error().Str("gid", event.GID).Msg("Download details empty even after 8 retries, giving up")
