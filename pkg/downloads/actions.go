@@ -67,5 +67,46 @@ func cleanupDownload(gid string, message string, url string, details *DownloadDe
 }
 
 func sendStatusMessage(msg *gotgbot.Message, keepForever bool) {
+	dlm := GetDownloadManager()
+	lastStatus := dlm.GetStatus(msg.Chat.Id)
 
+	if lastStatus != nil {
+		_, err := lifecycle.Bot.DeleteMessage(msg.Chat.Id, lastStatus.Msg.MessageId, nil)
+		if err != nil {
+			log.Error().Err(err).Msg("Failed to delete last status message")
+		}
+		dlm.DeleteStatus(msg.Chat.Id)
+	}
+
+	res := GetStatusMessage()
+	if keepForever {
+		msg, err := lifecycle.Bot.SendMessage(msg.Chat.Id, res.message, &gotgbot.SendMessageOpts{
+			ReplyToMessageId: msg.MessageId,
+			ParseMode: "html",
+		})
+		if err != nil {
+			log.Error().Err(err).Msg("Failed to send status message")
+			return
+		}
+		dlm.AddStatus(msg, res.message)
+		return
+	} else {
+		msg, err := lifecycle.Bot.SendMessage(msg.Chat.Id, res.message, &gotgbot.SendMessageOpts{
+			ReplyToMessageId: msg.MessageId,
+			ParseMode: "html",
+		})
+		if err != nil {
+			log.Error().Err(err).Msg("Failed to send status message")
+			return
+		}
+		dlm.AddStatus(msg, res.message)
+		go func(msg *gotgbot.Message) {
+			time.Sleep(1 * time.Minute)
+			_, err := lifecycle.Bot.DeleteMessage(msg.Chat.Id, msg.MessageId, nil)
+			if err != nil {
+				log.Error().Err(err).Msg("Failed to delete status message")
+			}
+			dlm.DeleteStatus(msg.Chat.Id)
+		}(msg)
+	}
 }

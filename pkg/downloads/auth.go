@@ -1,46 +1,9 @@
 package downloads
 
 import (
-	"fmt"
-
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/SphericalKat/go-mirror-bot/internal/config"
 )
-
-type SingleStatus struct {
-	Message  string
-	Filename *string
-	Details  *DownloadDetails
-}
-
-
-func getSingleStatus(details *DownloadDetails, msg *gotgbot.Message) *SingleStatus {
-	var authCode int
-	if msg != nil {
-		authCode = isAuthorized(msg, false)
-	} else {
-		authCode = 1
-	}
-
-	if authCode > -1 {
-		msg, filename, _, err := GetStatus(details)
-		if err != nil {
-			return &SingleStatus{
-				Message:  fmt.Sprintf("Error: %s - %s", details.Gid, err),
-				Filename: nil,
-				Details:  nil,
-			}
-		} else {
-			return &SingleStatus{
-				Message:  msg,
-				Filename: &filename,
-				Details:  details,
-			}
-		}
-	} else {
-		return &SingleStatus{Message: "You aren't authorized to use this bot here."}
-	}
-}
 
 func isAuthorized(msg *gotgbot.Message, skip bool) int {
 	for _, v := range config.Conf.SudoUsers {

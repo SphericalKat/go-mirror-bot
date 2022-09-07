@@ -20,7 +20,7 @@ type DownloadDetails struct {
 	TgRepliedUsername        string
 	TgChatId                 int64
 	TgMsgId                  int64
-	StartTime                int64
+	StartTime                time.Time
 	DownloadDir              string
 }
 
@@ -39,7 +39,7 @@ func NewDownloadDetails(gid string, msg *gotgbot.Message, isTar bool, downloadDi
 		TgFromId:          msg.From.Id,
 		TgChatId:          msg.Chat.Id,
 		TgMsgId:           msg.MessageId,
-		StartTime:         time.Now().Unix(),
+		StartTime:         time.Now(),
 		UploadedBytes:     0,
 		UploadedBytesLast: 0,
 	}
