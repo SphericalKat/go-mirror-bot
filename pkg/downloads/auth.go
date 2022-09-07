@@ -5,7 +5,7 @@ import (
 	"github.com/SphericalKat/go-mirror-bot/internal/config"
 )
 
-func isAuthorized(msg *gotgbot.Message, skip bool) int {
+func IsAuthorized(msg *gotgbot.Message, skip bool) int {
 	for _, v := range config.Conf.SudoUsers {
 		if v == msg.From.Id {
 			return 0
@@ -35,5 +35,4 @@ func isAuthorized(msg *gotgbot.Message, skip bool) int {
 	}
 
 	return -1
-
 }

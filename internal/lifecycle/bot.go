@@ -9,14 +9,13 @@ import (
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
 	"github.com/SphericalKat/go-mirror-bot/internal/config"
-	"github.com/SphericalKat/go-mirror-bot/pkg/commands"
 	"github.com/rs/zerolog/log"
 )
 
 var Dispatcher *ext.Dispatcher
 var Bot *gotgbot.Bot
 
-func StartBot(ctx context.Context, wg *sync.WaitGroup) {
+func StartBot(ctx context.Context, wg *sync.WaitGroup, botInit chan struct{}) {
 	token := config.Conf.BotToken
 	if token == "" {
 		log.Fatal().Msg("BOT_TOKEN is empty!")
@@ -53,7 +52,7 @@ func StartBot(ctx context.Context, wg *sync.WaitGroup) {
 
 	Dispatcher = updater.Dispatcher
 
-	commands.RegisterCommands(updater.Dispatcher)
+	botInit <- struct{}{}
 
 	log.Debug().Msg("Updater and dispatcher created")
 

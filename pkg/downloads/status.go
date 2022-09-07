@@ -124,7 +124,7 @@ type SingleStatus struct {
 func getSingleStatus(details *DownloadDetails, msg *gotgbot.Message) *SingleStatus {
 	var authCode int
 	if msg != nil {
-		authCode = isAuthorized(msg, false)
+		authCode = IsAuthorized(msg, false)
 	} else {
 		authCode = 1
 	}
@@ -182,13 +182,13 @@ func GetStatusMessage() StatusAll {
 			}
 		}
 		return StatusAll{
-			message: message,
+			message:            message,
 			totalDownloadCount: len(singleStatuses),
-			singleStatuses: singleStatuses,
+			singleStatuses:     singleStatuses,
 		}
 	} else {
 		return StatusAll{
-			message: "No active or queued downloads",
+			message:            "No active or queued downloads",
 			totalDownloadCount: 0,
 		}
 	}

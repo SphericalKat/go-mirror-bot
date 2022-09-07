@@ -22,7 +22,7 @@ func ShutdownListener(
 
 	// wait for signal
 	sig := <-termChan
-	log.Info().Msg(fmt.Sprintf("Received signal %v, gracefully shutting down services\n", sig))
+	log.Info().Msg(fmt.Sprintf("Received signal %v, gracefully shutting down services", sig))
 
 	// close channel
 	close(termChan)
