@@ -17,6 +17,8 @@ func PrepDownload(msg *gotgbot.Message, match string, isTar bool) {
 	dlDir := uuid.NewString()
 	dlm := GetDownloadManager()
 
+	log.Debug().Str("uri", match).Msg("Adding URI to aria")
+
 	gid, err := aria2c.Aria.AddURI([]string{match}, &arigo.Options{
 		Dir: dlDir,
 	})

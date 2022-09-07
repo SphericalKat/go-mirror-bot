@@ -26,6 +26,10 @@ func main() {
 	wg.Add(1)
 	aria2c.ConnectRPC(ctx, &wg)
 
+	// start event loop
+	wg.Add(1)
+	go downloads.ConsumeStatusQueue(ctx, &wg)
+
 	// start bot polling
 	wg.Add(1)
 	go lifecycle.StartBot(ctx, &wg, botInit)

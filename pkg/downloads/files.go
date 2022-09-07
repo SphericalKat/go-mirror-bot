@@ -90,8 +90,8 @@ func getFileNameFromUri(path string, uri string) string {
 		}
 	} else {
 		if uri != "" {
-			re1 := regexp.MustCompile("/#.*$|\\/\\?.*$|\\?.*$/")
-			re2 := regexp.MustCompile("/^.*\\//")
+			re1 := regexp.MustCompile(`/#.*$|\/\?.*$|\?.*$/`)
+			re2 := regexp.MustCompile(`/^.*\//`)
 			uri = re1.ReplaceAllString(uri, "")
 			uri = re2.ReplaceAllString(uri, "")
 			return uri

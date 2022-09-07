@@ -100,9 +100,9 @@ func downloadETA(totalLength uint, completedLength uint, speed uint) string {
 		return "-"
 	}
 	time := (totalLength - completedLength) / speed
-	seconds := math.Floor(float64(time % 60))
-	minutes := math.Floor(float64((time / 60) % 60))
-	hours := math.Floor(float64(time / 3600))
+	seconds := time % 60
+	minutes := (time / 60) % 60
+	hours := float64(time / 3600)
 
 	if hours == 0 {
 		if minutes == 0 {
