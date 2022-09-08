@@ -10,7 +10,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/puzpuzpuz/xsync v1.4.3
 	github.com/rs/zerolog v1.28.0
-	github.com/spf13/viper v1.12.0
+	github.com/spf13/viper v1.13.0
 	golang.org/x/oauth2 v0.0.0-20220822191816-0ebed06d0094
 	google.golang.org/api v0.84.0
 )
