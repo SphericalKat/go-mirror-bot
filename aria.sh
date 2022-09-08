@@ -16,6 +16,6 @@ TRACKERS="$(curl -Ns https://raw.githubusercontent.com/ngosang/trackerslist/mast
 aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port $RPC_LISTEN_PORT \
     --max-concurrent-downloads=$MAX_CONCURRENT_DOWNLOADS --max-connection-per-server=10 \
     --rpc-max-request-size=1024M --min-split-size=10M --follow-torrent=mem --bt-tracker=$TRACKERS \
-    --split=10 --rpc-secret=$ARIA_RPC_SECRET --max-overall-upload-limit=1 --daemon=false
+    --split=10 --rpc-secret=$ARIA_RPC_SECRET --seed-time=0 --max-overall-upload-limit=1 --daemon=false
 
 echo "Aria2c daemon started"

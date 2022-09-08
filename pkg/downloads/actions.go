@@ -18,6 +18,9 @@ func PrepDownload(msg *gotgbot.Message, match string, isTar bool) {
 	dlDir := uuid.NewString()
 	dlm := GetDownloadManager()
 
+	// renew the connection. just in case
+	aria2c.ReconnectRPC()
+
 	log.Debug().Str("uri", match).Msg("Adding URI to aria")
 
 	gid, err := aria2c.Aria.AddURI([]string{match}, &arigo.Options{
@@ -58,13 +61,21 @@ func cleanupDownload(gid string, message string, url string, details *DownloadDe
 		if !wasCancelAlled {
 			// If the dl was stopped with a cancelAll command, a message has already been sent to the chat.
 			// Do not send another one.
+			var user string
 			if details.TgRepliedUsername != "" {
-				message += fmt.Sprintf("\ncc:%s", details.TgRepliedUsername)
-				lifecycle.Bot.SendMessage(details.TgChatId, message, &gotgbot.SendMessageOpts{
-					ReplyToMessageId: details.TgMsgId,
-					ParseMode:        "html",
-				})
+				user = details.TgRepliedUsername
+			} else {
+				user = details.TgUsername
 			}
+			message += fmt.Sprintf("\ncc: %s", user)
+			_, err := lifecycle.Bot.SendMessage(details.TgChatId, message, &gotgbot.SendMessageOpts{
+				ReplyToMessageId: details.TgMsgId,
+				ParseMode:        "html",
+			})
+			if err != nil {
+				log.Error().Err(err).Msg("Failed to send cleanup message")
+			}
+
 		}
 		dlm.RemoveCancelledDownload(gid)
 		dlm.DeleteDownload(gid)

@@ -62,7 +62,7 @@ func onDownloadStart(event *arigo.DownloadEvent, retry uint) {
 			onDownloadStart(event, retry+1)
 		}()
 	} else {
-		log.Error().Str("gid", event.GID).Msg("Download details empty even after 8 retries, giving up")
+		log.Error().Str("gid", event.GID).Msg("onDownloadStart: Download details empty even after 8 retries, giving up")
 	}
 }
 
@@ -79,7 +79,7 @@ func onDownloadStop(event *arigo.DownloadEvent, retry uint) {
 			onDownloadStop(event, retry+1)
 		}()
 	} else {
-		log.Error().Str("gid", event.GID).Msg("Download details empty even after 8 retries, giving up")
+		log.Error().Str("gid", event.GID).Msg("onDownloadStop: Download details empty even after 8 retries, giving up")
 	}
 }
 
@@ -103,7 +103,7 @@ func onDownloadError(event *arigo.DownloadEvent, retry uint) {
 			onDownloadError(event, retry+1)
 		}()
 	} else {
-		log.Error().Str("gid", event.GID).Msg("Download details empty even after 8 retries, giving up")
+		log.Error().Str("gid", event.GID).Msg("onDownloadError: Download details empty even after 8 retries, giving up")
 	}
 }
 
@@ -154,7 +154,7 @@ func onDownloadComplete(event *arigo.DownloadEvent, retry uint) {
 			onDownloadComplete(event, retry+1)
 		}()
 	} else {
-		log.Error().Str("gid", event.GID).Msg("Download details empty even after 8 retries, giving up")
+		log.Error().Str("gid", event.GID).Msg("onDownloadComplete: Download details empty even after 8 retries, giving up")
 	}
 }
 
@@ -179,7 +179,7 @@ func RegisterCommands(ctx context.Context, wg *sync.WaitGroup) {
 	})
 
 	aria2c.Aria.OnBTDownloadComplete(func(event *arigo.DownloadEvent) {
-		onDownloadComplete(event, 1)
+		// onDownloadComplete(event, 1)
 	})
 
 	// listen for shutdowns and tickers

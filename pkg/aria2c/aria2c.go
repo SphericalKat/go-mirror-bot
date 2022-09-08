@@ -21,10 +21,20 @@ func ConnectRPC(ctx context.Context, wg *sync.WaitGroup) {
 	go func() {
 		defer wg.Done()
 		<-ctx.Done()
-		err := Aria.Close()
-		if err != nil {
-			log.Error().Err(err).Msg("Error while closing aria2 RPC connection. This will not affect the shutdown.")
+		if Aria != nil {
+			err := Aria.Close()
+			if err != nil {
+				log.Error().Err(err).Msg("Error while closing aria2 RPC connection. This will not affect the shutdown.")
+			}
+			log.Info().Msg("Disconnected from aria2 RPC")
 		}
-		log.Info().Msg("Disconnected from aria2 RPC")
 	}()
+}
+
+func ReconnectRPC() {
+	c, err := arigo.Dial("ws://localhost:8210/jsonrpc", "some")
+	if err != nil {
+		log.Error().Err(err).Msg("Unable to connect to aria2 RPC")
+	}
+	Aria = c
 }
