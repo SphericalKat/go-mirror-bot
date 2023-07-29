@@ -97,6 +97,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dghubble/trie v0.0.0-20220811160003-18e0eff3ca7b h1:TDVVzd8q/n2YLqidDna2iptspyyNyqi9nZmxNA6Yrg0=
 github.com/dghubble/trie v0.0.0-20220811160003-18e0eff3ca7b/go.mod h1:GWlN/cTm3wBVk2lr8Wszyla0FEgP9EH12iTLm7AH96k=
+github.com/dghubble/trie v0.0.0-20230729160116-2bc358f28a8b h1:WKIAjG75YSAoZfer6DUwkMNEnlbo+5hOFFg0ZJu2Ax0=
+github.com/dghubble/trie v0.0.0-20230729160116-2bc358f28a8b/go.mod h1:sOmnzfBNH7H92ow2292dDFWNsVQuh/izuD7otCYb1ak=
 github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.4/go.mod h1:6rpuAdCZL397s3pYoYcLgu1mIlRU8Am5FuJP05cCM98=
