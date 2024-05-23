@@ -9,7 +9,7 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.1
 	github.com/google/uuid v1.3.0
 	github.com/puzpuzpuz/xsync v1.4.3
-	github.com/rs/zerolog v1.28.0
+	github.com/rs/zerolog v1.33.0
 	github.com/spf13/viper v1.13.0
 	golang.org/x/oauth2 v0.0.0-20220909003341-f21342109be1
 	google.golang.org/api v0.95.0
@@ -28,7 +28,7 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.16 // indirect
+	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.5 // indirect
@@ -39,7 +39,7 @@ require (
 	github.com/subosito/gotenv v1.4.1 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/net v0.0.0-20220624214902-1bab6f366d9e // indirect
-	golang.org/x/sys v0.0.0-20220829200755-d48e67d00261 // indirect
+	golang.org/x/sys v0.12.0 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20220624142145-8cd45d7dbd1f // indirect
