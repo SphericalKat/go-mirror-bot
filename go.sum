@@ -64,6 +64,8 @@ github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.10 h1:4P297S3AZ8RsBrMPxJm+jpFCY8kx8KZPNZXp6ThDAbQ=
 github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.10/go.mod h1:r815fYWTudnU9JhtsJAxUtuV7QrSgKpChJkfTSMFpfg=
+github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.29 h1:5/K8zgmoKnsegt6h9XvFIJAGxbHVWOEwSpjdjaySf6A=
+github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.29/go.mod h1:kL1v4iIjlalwm3gCYGvF4NLa3hs+aKEfRkNJvj4aoDU=
 github.com/SphericalKat/arigo v0.0.0-20220907164004-254e13e0a36a h1:5Wn7ZmWD5rYUV6a71yqg1tB72RS+scJn/jNGGvr0aFA=
 github.com/SphericalKat/arigo v0.0.0-20220907164004-254e13e0a36a/go.mod h1:3YkW9yoVrwbxngl+0yQgptXgVVFHyRWmVePfll0rzL8=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
