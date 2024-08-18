@@ -3,7 +3,7 @@ module github.com/SphericalKat/go-mirror-bot
 go 1.18
 
 require (
-	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.10
+	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.29
 	github.com/SphericalKat/arigo v0.0.0-20220907164004-254e13e0a36a
 	github.com/dghubble/trie v0.0.0-20220811160003-18e0eff3ca7b
 	github.com/gabriel-vasile/mimetype v1.4.1
