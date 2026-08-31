@@ -1,6 +1,6 @@
 module github.com/SphericalKat/go-mirror-bot
 
-go 1.18
+go 1.25.0
 
 require (
 	github.com/PaulSonOfLars/gotgbot/v2 v2.0.0-rc.10
@@ -11,7 +11,7 @@ require (
 	github.com/puzpuzpuz/xsync v1.4.3
 	github.com/rs/zerolog v1.28.0
 	github.com/spf13/viper v1.13.0
-	golang.org/x/oauth2 v0.0.0-20220909003341-f21342109be1
+	golang.org/x/oauth2 v0.36.0
 	google.golang.org/api v0.95.0
 )
 
