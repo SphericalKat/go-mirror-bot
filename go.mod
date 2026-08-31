@@ -7,7 +7,7 @@ require (
 	github.com/SphericalKat/arigo v0.0.0-20220907164004-254e13e0a36a
 	github.com/dghubble/trie v0.0.0-20220811160003-18e0eff3ca7b
 	github.com/gabriel-vasile/mimetype v1.4.1
-	github.com/google/uuid v1.3.0
+	github.com/google/uuid v1.6.0
 	github.com/puzpuzpuz/xsync v1.4.3
 	github.com/rs/zerolog v1.28.0
 	github.com/spf13/viper v1.13.0
